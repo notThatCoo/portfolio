@@ -1,0 +1,10 @@
+pnpm-lock.yaml
+.next
+public/ort
+public/models
+ml/.venv
+src/lib/detector/golden.json
+src/lib/detector/model-card.json
+playwright-report
+test-results
+AGENTS.md

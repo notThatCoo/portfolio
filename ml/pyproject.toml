@@ -1,0 +1,15 @@
+[project]
+name = "toydetector"
+version = "0.1.0"
+description = "Toy light-yield surrogate for the portfolio Detector app (synthetic data only)."
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "numpy>=2.1",
+  "torch>=2.6",
+  "onnx>=1.17",
+  "onnxscript>=0.2",
+  "onnxruntime>=1.20",
+]
+
+[tool.uv]
+package = false

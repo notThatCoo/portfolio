@@ -1,0 +1,26 @@
+---
+title: DarkSide-20k neural-net surrogate
+summary: A neural network that predicts detector light response fast enough to replace slow simulation in the loop. RISE 2025 research.
+order: 1
+status: research
+year: 2025
+stack: [Python, PyTorch, NumPy, ONNX]
+links: []
+---
+
+## Overview
+
+DarkSide-20k is a liquid-argon dark matter detector. Turning an interaction position into the light pattern seen by its photodetectors usually requires slow optical simulation. A **surrogate model** learns that mapping so you can evaluate it in milliseconds.
+
+<Todo>
+  Placeholder. Describe the problem in 2–3 sentences, what data you trained on, the model
+  architecture, and how you validated it.
+</Todo>
+
+## Try a toy version
+
+The **Detector** app on this desktop runs a _toy_ version of the idea in your browser: a small MLP trained on synthetic data, exported to ONNX. It is **not** the research model and uses no DarkSide data.
+
+## Results
+
+<Todo>Add your real metrics, e.g. error vs. full simulation and speed-up factor.</Todo>
