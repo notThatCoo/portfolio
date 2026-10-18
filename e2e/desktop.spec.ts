@@ -1,3 +1,4 @@
+import { gotoReady } from "./helpers";
 import { expect, test, type Page } from "@playwright/test";
 
 test.skip(({ isMobile }) => isMobile, "desktop shell only");
@@ -6,7 +7,7 @@ test.skip(({ isMobile }) => isMobile, "desktop shell only");
 const win = (page: Page, app: string) => page.locator(`section.wm-window[data-app="${app}"]`);
 
 test("opening an app from the dock updates the URL, and Back closes it", async ({ page }) => {
-  await page.goto("/");
+  await gotoReady(page, "/");
   await page
     .getByRole("navigation", { name: "Dock" })
     .getByRole("button", { name: "Notes" })
@@ -21,7 +22,7 @@ test("opening an app from the dock updates the URL, and Back closes it", async (
 });
 
 test("deep links open the right window and in-app navigation is shareable", async ({ page }) => {
-  await page.goto("/finder/streamline-etl");
+  await gotoReady(page, "/finder/streamline-etl");
   const finder = win(page, "finder");
   await expect(finder.getByRole("heading", { level: 1, name: "streamline-etl" })).toBeVisible();
 
@@ -40,7 +41,7 @@ test("deep links open the right window and in-app navigation is shareable", asyn
 });
 
 test("windows can be dragged by the title bar and keep focus order", async ({ page }) => {
-  await page.goto("/notes/about-me");
+  await gotoReady(page, "/notes/about-me");
   const notes = win(page, "notes");
   const before = (await notes.boundingBox())!;
   const bar = notes.locator(".wm-titlebar");
@@ -50,8 +51,9 @@ test("windows can be dragged by the title bar and keep focus order", async ({ pa
   await page.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2 + 60, { steps: 8 });
   await page.mouse.up();
   const after = (await notes.boundingBox())!;
-  expect(Math.round(after.x - before.x)).toBe(120);
-  expect(Math.round(after.y - before.y)).toBe(60);
+  // ±2px: positions are rounded to whole pixels when committed.
+  expect(Math.abs(after.x - before.x - 120)).toBeLessThanOrEqual(2);
+  expect(Math.abs(after.y - before.y - 60)).toBeLessThanOrEqual(2);
 
   // Open a second window, then click the first: it should come back to the front and own the URL.
   await page
@@ -66,7 +68,7 @@ test("windows can be dragged by the title bar and keep focus order", async ({ pa
 });
 
 test("close and minimize buttons work", async ({ page }) => {
-  await page.goto("/music");
+  await gotoReady(page, "/music");
   await page.getByRole("button", { name: "Minimize Music" }).click();
   await expect(win(page, "music")).toBeHidden();
   await expect(page).toHaveURL("/");
@@ -80,7 +82,7 @@ test("close and minimize buttons work", async ({ page }) => {
 });
 
 test("command palette opens projects with the keyboard", async ({ page }) => {
-  await page.goto("/");
+  await gotoReady(page, "/");
   await page.keyboard.press("ControlOrMeta+k");
   const palette = page.getByRole("dialog", { name: "Command palette" });
   await expect(palette).toBeVisible();
@@ -91,7 +93,7 @@ test("command palette opens projects with the keyboard", async ({ page }) => {
 });
 
 test("terminal runs commands, completes paths, and opens windows", async ({ page }) => {
-  await page.goto("/terminal");
+  await gotoReady(page, "/terminal");
   const input = page.getByRole("textbox", { name: "Terminal command" });
   await input.fill("whoami");
   await input.press("Enter");
@@ -107,7 +109,7 @@ test("terminal runs commands, completes paths, and opens windows", async ({ page
 });
 
 test("detector runs the ONNX model in the browser", async ({ page }) => {
-  await page.goto("/detector");
+  await gotoReady(page, "/detector");
   await expect(page.getByText("Toy model · synthetic data")).toBeVisible();
   const inference = page.locator("dt", { hasText: "Inference" }).locator("+ dd");
   await expect(inference).toHaveText(/\d+(\.\d+)? ms/, { timeout: 20_000 });

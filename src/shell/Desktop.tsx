@@ -71,6 +71,11 @@ export function Desktop({ content, bodies, children }: DesktopProps) {
     [],
   );
 
+  // Marks the shell as interactive (used by e2e tests to wait for hydration).
+  useEffect(() => {
+    document.documentElement.dataset.ready = "true";
+  }, []);
+
   // Back / forward.
   useEffect(() => {
     const onPop = () => {

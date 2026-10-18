@@ -1,7 +1,8 @@
+import { gotoReady } from "./helpers";
 import { expect, test } from "@playwright/test";
 
 test("phones get a home screen with full-screen apps", async ({ page }) => {
-  await page.goto("/");
+  await gotoReady(page, "/");
   await expect(
     page.getByRole("heading", { level: 1, name: "Tolu Adeleye", exact: true }),
   ).toBeVisible();

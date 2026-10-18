@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { gotoReady } from "./helpers";
 import { expect, test } from "@playwright/test";
 
 test.skip(({ isMobile }) => isMobile, "covered on desktop");
@@ -7,7 +8,7 @@ for (const path of ["/", "/notes/about-me", "/finder", "/detector"]) {
   for (const scheme of ["dark", "light"] as const) {
     test(`no serious a11y violations on ${path} (${scheme})`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: scheme });
-      await page.goto(path);
+      await gotoReady(page, path);
       await page.waitForLoadState("networkidle");
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
@@ -29,7 +30,7 @@ for (const path of ["/", "/notes/about-me", "/finder", "/detector"]) {
 }
 
 test("keyboard-only: skip link, dock, and focus moving into opened windows", async ({ page }) => {
-  await page.goto("/");
+  await gotoReady(page, "/");
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to desktop" })).toBeFocused();
   const notesButton = page
