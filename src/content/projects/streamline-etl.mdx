@@ -1,20 +1,27 @@
 ---
 title: streamline-etl
-summary: A tested, rerunnable ETL pipeline. Extract, validate, transform, load, with clear failure modes.
+summary: Containerized ETL that loads CSV, API, and stream sources into a PostgreSQL warehouse through a Redis Streams queue.
 order: 2
 status: shipped
 year: 2025
-stack: [Python, SQL, pandas]
+stack: [PostgreSQL, Redis Streams, Docker Compose, LLM]
 links: []
 ---
 
 ## Overview
 
-<Todo>Placeholder. What data does it move, from where to where, and why did it need to exist?</Todo>
+A containerized ETL pipeline that pulls data from three kinds of sources (CSV files, APIs, and streams) and loads it into a PostgreSQL warehouse.
+
+<Todo>What data does it move, and why did it need to exist?</Todo>
 
 ## Design
 
-<Todo>Describe stages, how you handle bad rows, idempotency/re-runs, and how it is tested.</Todo>
+- **Queue:** **Redis Streams** between the sources and the warehouse.
+- **Warehouse:** **PostgreSQL**.
+- **Containers:** the stack runs with **Docker Compose**.
+- **Idempotent loads:** rerunning a load doesn't duplicate data.
+- **Tested:** 12 passing tests.
+- **LLM helper:** writes SQL.
 
 ## What I'd do next
 

@@ -1,5 +1,5 @@
 """
-Toy optical model of a cylindrical detector. SYNTHETIC — not DarkSide-20k.
+Toy optical model of a cylindrical detector. SYNTHETIC, not DarkSide-20k.
 
 Geometry (all lengths normalized):
   * cylinder of radius R = 1 and half-height H = 1, axis along z

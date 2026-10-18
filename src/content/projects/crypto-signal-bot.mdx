@@ -1,19 +1,21 @@
 ---
 title: Crypto signal bot
-summary: A bot that turns market data into trading signals. Live signals will stream into Activity Monitor.
+summary: Python bot on a Google Cloud VM that sends trading signals to Discord, backtested against buy-and-hold.
 order: 4
 status: in-progress
 year: 2026
-stack: [Python, WebSockets]
+stack: [Python, Exchange APIs, Google Cloud, Discord webhooks]
 links: []
 ---
 
 ## Overview
 
-<Todo>
-  Placeholder. Which markets, which signals, and how you avoid fooling yourself (backtesting,
-  look-ahead bias, fees).
-</Todo>
+- **Built with:** Python and exchange APIs.
+- **Runs:** on a schedule on a **Google Cloud** VM.
+- **Alerts:** posts signals to Discord through a webhook.
+- **Evaluation:** backtested for precision and recall against a buy-and-hold baseline.
+
+<Todo>Which markets and signals, and what were the backtest precision and recall?</Todo>
 
 ## Live view
 

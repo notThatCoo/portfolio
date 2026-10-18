@@ -7,7 +7,7 @@ export const site = {
   shortName: "Tolu",
   tagline: "Data science · ML · data engineering",
   description:
-    "Tolu Adeleye — B.S. Data Science, UC Riverside (2026). Projects in machine learning, physics surrogates, and data engineering, presented as a desktop in your browser.",
+    "Tolu Adeleye, data science graduate: B.S. Data Science, UC Riverside 2026. Projects in machine learning, physics surrogates, and data engineering, presented as a desktop in your browser.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tolu-adeleye.vercel.app",
   github: "https://github.com/notThatCoo",
   githubHandle: "notThatCoo",

@@ -1,8 +1,8 @@
 ---
 title: Résumé
-summary: Education, experience, and skills.
+summary: Education, research, experience, and skills.
 order: 2
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Tolu Adeleye
@@ -19,26 +19,28 @@ Data Science · Machine Learning · Data Engineering
 
 ## Research
 
-**RISE 2025: DarkSide-20k neural-network surrogate**
+**DarkSide-20k neural-network surrogate**, UCR RISE 2025, with Alec Peck and Dr. Shawn Westerdale
 
-<Todo>
-  Add your lab/advisor, dates, and 2–3 bullets with concrete results (e.g. speed-up vs. full
-  simulation, accuracy metric).
-</Todo>
+- Built a neural-network surrogate that predicts light across 128 photodetector units of the Outer Veto in milliseconds, replacing Geant4 simulation that takes hours of CPU time per position.
+- Reached 0.993 cosine similarity on held-out channel distributions using a two-head MLP (softmax for shape, Softplus for total light) trained on 1,463 filled voxels of a Geant4 light map.
+- Coordinated the ML workstream for an inverse model that predicts 3D interaction position from the 128 channels; fixed overfitting with preprocessing changes and regularization, cutting validation loss from 0.292 to 0.074 and raising cosine similarity from 0.780 to 0.927.
+- Paper available on request.
 
 ## Experience
 
 <Todo>
-  Add roles as: **Title, Organization**, dates, then 2–3 bullets that each start with a verb and end
-  with a result.
+  Add roles as: **Title, Organization**, dates, then two or three bullets that each start with a
+  verb and end with a result.
 </Todo>
 
 ## Skills
 
-| Area      | Tools                       |
-| --------- | --------------------------- |
-| Languages | Python, SQL, TypeScript     |
-| ML        | PyTorch, scikit-learn, ONNX |
-| Data      | pandas, ETL pipelines       |
+| Area      | Tools                                      |
+| --------- | ------------------------------------------ |
+| Languages | Python, SQL                                |
+| ML        | PyTorch, MLPs, MobileNetV2                 |
+| Data      | pandas, PostgreSQL, Redis Streams, Jupyter |
+| Infra     | Docker Compose, Google Cloud               |
+| Science   | Geant4                                     |
 
 <Todo>Edit the skills table to match what you'd be comfortable being quizzed on.</Todo>

@@ -1,26 +1,53 @@
 ---
 title: DarkSide-20k neural-net surrogate
-summary: A neural network that predicts detector light response fast enough to replace slow simulation in the loop. RISE 2025 research.
+summary: Predicts light across 128 photodetector units in milliseconds instead of hours of Geant4 simulation. UCR RISE 2025.
 order: 1
 status: research
 year: 2025
-stack: [Python, PyTorch, NumPy, ONNX]
+stack: [Geant4, MLP]
 links: []
 ---
 
 ## Overview
 
-DarkSide-20k is a liquid-argon dark matter detector. Turning an interaction position into the light pattern seen by its photodetectors usually requires slow optical simulation. A **surrogate model** learns that mapping so you can evaluate it in milliseconds.
+UCR RISE 2025 research with Alec Peck and Dr. Shawn Westerdale on the DarkSide-20k dark matter experiment.
 
-<Todo>
-  Placeholder. Describe the problem in 2–3 sentences, what data you trained on, the model
-  architecture, and how you validated it.
-</Todo>
+Simulating how light spreads through the detector's Outer Veto with Geant4 takes hours of CPU time for each interaction position. I built a neural-network surrogate that predicts the same light pattern in milliseconds.
+
+- **Input:** interaction position (ρ, φ, z), with φ encoded as sin/cos.
+- **Output:** the light seen by each of the 128 photodetector units.
+
+## Model
+
+A 3-layer ReLU MLP with two heads:
+
+- a **softmax** head for the shape of the distribution across channels,
+- a **Softplus** head for the total amount of light.
+
+**Loss:** KL divergence on the shape plus 0.1 × MSE on log(1 + total). Trained with Adam (lr 1e-3) and early stopping on an 80/10/10 train/validation/test split.
+
+**Data:** a coarse Geant4 light map with 55,188 voxels, of which 1,463 are filled.
+
+## Results
+
+- **0.993 cosine similarity** on held-out channel distributions.
+- Total light was harder: MAE of about 2e-3 against a median total of 3.6e-3. The main reason is how sparse the light map is.
+
+## Inverse model
+
+Later in the project we worked on the reverse problem: predicting the 3D interaction position from the 128 channels. The first version overfit. Preprocessing changes and regularization fixed it:
+
+| Metric            | Before | After |
+| ----------------- | ------ | ----- |
+| Validation loss   | 0.292  | 0.074 |
+| Cosine similarity | 0.780  | 0.927 |
+
+I coordinated the ML workstream and assigned owners for preprocessing, modeling, results, and documentation.
+
+## Paper
+
+Available on request.
 
 ## Try a toy version
 
 The **Detector** app on this desktop runs a _toy_ version of the idea in your browser: a small MLP trained on synthetic data, exported to ONNX. It is **not** the research model and uses no DarkSide data.
-
-## Results
-
-<Todo>Add your real metrics, e.g. error vs. full simulation and speed-up factor.</Todo>
